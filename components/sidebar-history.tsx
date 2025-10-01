@@ -23,6 +23,7 @@ import {
   SidebarMenu,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import type { Chat } from "@/lib/db/schema";
 import { fetcher } from "@/lib/utils";
 import { LoaderIcon } from "./icons";
@@ -210,16 +211,17 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
       <SidebarGroup>
         <SidebarGroupContent>
           <SidebarMenu>
-            {paginatedChatHistories &&
-              (() => {
-                const chatsFromHistory = paginatedChatHistories.flatMap(
-                  (paginatedChatHistory) => paginatedChatHistory.chats
-                );
+            <TooltipProvider delayDuration={300}>
+              {paginatedChatHistories &&
+                (() => {
+                  const chatsFromHistory = paginatedChatHistories.flatMap(
+                    (paginatedChatHistory) => paginatedChatHistory.chats
+                  );
 
-                const groupedChats = groupChatsByDate(chatsFromHistory);
+                  const groupedChats = groupChatsByDate(chatsFromHistory);
 
-                return (
-                  <div className="flex flex-col gap-6">
+                  return (
+                    <div className="flex flex-col gap-6">
                     {groupedChats.today.length > 0 && (
                       <div>
                         <div className="px-2 py-1 text-sidebar-foreground/50 text-xs">
@@ -322,6 +324,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
                   </div>
                 );
               })()}
+            </TooltipProvider>
           </SidebarMenu>
 
           <motion.div

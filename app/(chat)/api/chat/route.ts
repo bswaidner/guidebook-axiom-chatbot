@@ -71,9 +71,9 @@ export function getStreamContext() {
         waitUntil: after,
       });
     } catch (error: any) {
-      if (error.message.includes("REDIS_URL")) {
+      if (error.message.includes("UPSTASH_REDIS_REDIS_URL")) {
         console.log(
-          " > Resumable streams are disabled due to missing REDIS_URL"
+          " > Resumable streams are disabled due to missing UPSTASH_REDIS_REDIS_URL"
         );
       } else {
         console.error(error);

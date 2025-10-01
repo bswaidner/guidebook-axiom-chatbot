@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import Link from "next/link";
 import { memo } from "react";
 import { useChatVisibility } from "@/hooks/use-chat-visibility";
@@ -25,6 +26,19 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "./ui/sidebar";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "./ui/tooltip";
+
+const formatChatDate = (dateString: Date | string) => {
+  try {
+    return format(new Date(dateString), "MMM dd, yyyy 'at' h:mm a");
+  } catch {
+    return "Invalid date";
+  }
+};
 
 const PureChatItem = ({
   chat,
@@ -44,11 +58,18 @@ const PureChatItem = ({
 
   return (
     <SidebarMenuItem>
-      <SidebarMenuButton asChild isActive={isActive}>
-        <Link href={`/chat/${chat.id}`} onClick={() => setOpenMobile(false)}>
-          <span>{chat.title}</span>
-        </Link>
-      </SidebarMenuButton>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <SidebarMenuButton asChild isActive={isActive}>
+            <Link href={`/chat/${chat.id}`} onClick={() => setOpenMobile(false)}>
+              <span>{chat.title}</span>
+            </Link>
+          </SidebarMenuButton>
+        </TooltipTrigger>
+        <TooltipContent side="right">
+          {formatChatDate(chat.createdAt)}
+        </TooltipContent>
+      </Tooltip>
 
       <DropdownMenu modal={true}>
         <DropdownMenuTrigger asChild>
