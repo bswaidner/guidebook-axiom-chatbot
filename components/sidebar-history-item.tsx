@@ -26,11 +26,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "./ui/sidebar";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "./ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 const formatChatDate = (dateString: Date | string) => {
   try {
@@ -61,7 +57,10 @@ const PureChatItem = ({
       <Tooltip>
         <TooltipTrigger asChild>
           <SidebarMenuButton asChild isActive={isActive}>
-            <Link href={`/chat/${chat.id}`} onClick={() => setOpenMobile(false)}>
+            <Link
+              href={`/chat/${chat.id}`}
+              onClick={() => setOpenMobile(false)}
+            >
               <span>{chat.title}</span>
             </Link>
           </SidebarMenuButton>
