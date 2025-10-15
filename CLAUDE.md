@@ -55,13 +55,11 @@ pnpm db:check         # Check for schema issues
 All tables use Drizzle ORM. Important schemas:
 - `user` - User accounts (email/password, guests have `guest-{timestamp}` emails)
 - `chat` - Chat sessions with visibility (public/private) and lastContext
-- `message_v2` - Chat messages with parts and attachments (replaces deprecated `Message`)
-- `vote_v2` - Message votes (upvote/downvote) (replaces deprecated `Vote`)
+- `message` - Chat messages with parts and attachments (stored as Message_v2 in DB)
+- `vote` - Message votes (upvote/downvote) (stored as Vote_v2 in DB)
 - `document` - Artifacts with versioning (text, code, image, sheet kinds)
 - `suggestion` - Collaborative editing suggestions for documents
 - `stream` - Real-time stream tracking for chat responses
-
-**⚠️ IMPORTANT**: `messageDeprecated` and `voteDeprecated` tables still exist in schema but are deprecated. Always use `message` (Message_v2) and `vote` (Vote_v2) tables. Never query or insert into deprecated tables.
 
 ### AI Model Configuration
 Located in `lib/ai/providers.ts`:
@@ -160,10 +158,9 @@ export PLAYWRIGHT=True && pnpm exec playwright test <test-file>
 
 ## Known Technical Debt
 
-1. **Deprecated schemas** - `messageDeprecated` and `voteDeprecated` tables need removal after data migration
-2. **Pre-release dependencies** - Next.js 15 canary, React 19 RC, next-auth beta should be stabilized
-3. **Disabled linter rules** - `noExplicitAny`, `noConsole`, `noNonNullAssertion` should be enabled
-4. **Incomplete features** - Premium tier (paid membership) in `lib/ai/entitlements.ts` not implemented
+1. **Pre-release dependencies** - Next.js 15 canary, React 19 RC, next-auth beta should be stabilized
+2. **Disabled linter rules** - `noExplicitAny`, `noConsole`, `noNonNullAssertion` should be enabled
+3. **Incomplete features** - Premium tier (paid membership) in `lib/ai/entitlements.ts` not implemented
 
 ## Adding New Features
 
